@@ -11,7 +11,7 @@ average_age = filtered_data['age'].mean()
 
 # Global sensitivity calculation
 max_age = filtered_data['age'].max()
-global_sensitivity = max_age - 26
+global_sensitivity = average_age - 26
 
 # Laplace noise function
 def add_laplace_noise(query_result, epsilon, sensitivity):
