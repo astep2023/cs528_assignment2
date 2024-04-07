@@ -2,7 +2,7 @@ import pandas as pd
 import math
 import random
 
-data = pd.read_csv('adult.csv')
+df = pd.read_csv('adult.csv')
 
 # Compute frequency counts for each "Education" category
 education_values = data['education'].value_counts()
