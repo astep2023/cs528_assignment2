@@ -5,19 +5,19 @@ import random
 data = pd.read_csv('adult.csv')
 
 # Compute frequency counts for each "Education" category
-education_counts = data['education'].value_counts()
-most_frequent_education = education_counts.idxmax()
+education_values = data['education'].value_counts()
+most_frequent_education = education_values.idxmax()
 
 # (a) Compute Global Sensitivity
-global_sensitivity = education_counts.max() - education_counts.min()
+global_sensitivity = education_values.max() - education_values.min()
 
 # The exponential mechanism function
 def exponential_mechanism(epsilon):
     # Compute Utility Scores
     def compute_utility_score(sensitivity, epsilon):
         utility_scores = dict()
-        for education, count in education_counts.items():
-            utility_scores[education] = math.exp(epsilon * count / (2 * sensitivity))
+        for education, values in education_values.items():
+            utility_scores[education] = math.exp(epsilon * values / (2 * sensitivity))
         return utility_scores
 
     utility_scores = compute_utility_score(global_sensitivity, epsilon)
@@ -34,7 +34,7 @@ def exponential_mechanism(epsilon):
 
     probabilities = compute_probabilities(utility_scores, total_utility)
 
-    # Generate noisy probabilities for epsilon = 0.5 and epsilon = 1
+    # Generate noisy probabilities for epsilon.
 
     def generate_noisy_probabilities(probabilities, epsilon):
         noisy_probabilities = dict()
@@ -57,5 +57,9 @@ def exponential_mechanism(epsilon):
     return noisy_result
 
 print("Query Result (Without Noise):", most_frequent_education)
-print("Noisy Result (0.5-Differential Privacy):", exponential_mechanism(0.5))
-print("Noisy Result (1-Differential Privacy):", exponential_mechanism(1))
+
+epsilon_0_5 = 0.5
+epsilon_1 = 1.0
+
+print("Noisy Result (0.5-Differential Privacy):", exponential_mechanism(epsilon_0_5))
+print("Noisy Result (1-Differential Privacy):", exponential_mechanism(epsilon_1))
